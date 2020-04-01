@@ -58,58 +58,69 @@ const Foursquare = {
             return venues;
         }
     };
-
     //Should
     const getPic = async (venues) => {
-        const photo_id = '';
-        const urlToFetch = `${Foursquare.getPhotoUrl}${photo_id}/photos?&v=20200325&client_id=${clientId}&client_secret${clientSecret}`
-    
-        try {
-            const response = await fetch(urlToFetch);
-              if (response.ok){
-                const jsonResponse = await response.json();
 
-                return venues;
-              }
+        try {
+          const venue = venues[random(index)];
+          const photo_id = venue.id;
+          const photoUrlToFetch = `https://api.foursquare.com/v2/venues/${photo_id}/photos?/&v=20200329&client_id=${Foursquare.clientId}&client_secret=${Foursquare.clientSecret}`
+          
+          
+          const response = fetch(photoUrlToFetch);
+                if (response.ok){
+                  const jsonResponse = response.json();
+                  const imgLink = jsonResponse.response.photos.items.prefix + "100x100" + jsonResponse.response.photos.items.suffix
+                  return imgLink //HERE IS THE PROBLEM
+
+                };
+                return response;
+              
         } 
         
         catch(error){
             console.log(error);
         }
     };
-    /*
-    const venueImgSrc = await getPic(venue.id)
-    getPic has to return a url for the picture
-    
-    parsing json
-    */
+
     
     const renderVenues = async (venues) => {
 
         try {
       $venueDivs.forEach(($venue, index) => {
-        const venue =  venues[random(index)];
+        const venue = venues[random(index)];
         const photo_id = venue.id;
         const photoUrlToFetch = `https://api.foursquare.com/v2/venues/${photo_id}/photos?/&v=20200329&client_id=${Foursquare.clientId}&client_secret=${Foursquare.clientSecret}`
-        const category = venue.categories[0].name;
-
+        
+        
         const response = fetch(photoUrlToFetch);
               if (response.ok){
                 const jsonResponse = response.json();
                 const imgLink = jsonResponse.response.photos.items.prefix + "100x100" + jsonResponse.response.photos.items.suffix
-                const venueContent = createVenueHTML(venue.name, venue.location, imgLink, category);
-        $venue.append(venueContent);
-                
-              }
+                return imgLink //HERE IS THE PROBLEM
+              };
+              
+              
+              
+              const category = venue.categories[0].name;
+            
+              const venueContent = createVenueHTML(venue.name, venue.location, imgLink, category);
+              $venue.append(venueContent);
+
+
+
       });
+
       $destination.append(`<h2>${venues[0].location.city}</h2>`);
-        
+
     }
         catch (error) {
             console.log(error)
         }
     }
     
+
+
     const getForecast = async () => {
       const urlToFetch = `${OpenWeather.weatherUrl}?&q=${$input.val()}&APPID=${OpenWeather.openWeatherKey}`;
       
@@ -127,9 +138,6 @@ const Foursquare = {
     
     };
     
-
-
-    
     const renderForecast = (day) => {
         let weatherContent = createWeatherHTML(day);
       $weatherDiv.append(weatherContent);
@@ -140,9 +148,18 @@ const Foursquare = {
       $weatherDiv.empty();
       $destination.empty();
       $container.css("visibility", "visible");
-      getVenues().then((venues) => renderVenues(venues));
+      getVenues().then(venues => renderVenues(venues));
       getForecast().then(forecast => renderForecast(forecast));
       return false;
     }
     
     $submit.click(executeSearch)
+
+
+
+        /*
+    const venueImgSrc = await getPic(venue.id)
+    getPic has to return a url for the picture
+    
+    parsing json
+    */
