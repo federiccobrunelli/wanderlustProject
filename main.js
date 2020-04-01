@@ -41,48 +41,6 @@ const Foursquare = {
       }
     };
 
-
-    const getId = async (venues) => {
-        try {
-        let photoIdArray = [];
-            for (index = 0; index < venues.length; index++) {
-            photoIdArray.push(venues[index].id)
-        }
-            //has to return 2 values
-            return [venues, photoIdArray]
-            
-        }
-
-        catch (error) {
-            console.log(error)
-            return venues;
-        }
-    };
-    //Should
-    const getPic = async (venues) => {
-
-        try {
-          const venue = venues[random(index)];
-          const photo_id = venue.id;
-          const photoUrlToFetch = `https://api.foursquare.com/v2/venues/${photo_id}/photos?/&v=20200329&client_id=${Foursquare.clientId}&client_secret=${Foursquare.clientSecret}`
-          
-          
-          const response = fetch(photoUrlToFetch);
-                if (response.ok){
-                  const jsonResponse = response.json();
-                  const imgLink = jsonResponse.response.photos.items.prefix + "100x100" + jsonResponse.response.photos.items.suffix
-                  return imgLink //HERE IS THE PROBLEM
-
-                };
-                return response;
-              
-        } 
-        
-        catch(error){
-            console.log(error);
-        }
-    };
-
     
     const renderVenues = async (venues) => {
 
@@ -92,19 +50,19 @@ const Foursquare = {
         const photo_id = venue.id;
         const photoUrlToFetch = `https://api.foursquare.com/v2/venues/${photo_id}/photos?/&v=20200329&client_id=${Foursquare.clientId}&client_secret=${Foursquare.clientSecret}`
         
-        
+        //HERE IS THE PROBLEM
         const response = fetch(photoUrlToFetch);
               if (response.ok){
                 const jsonResponse = response.json();
                 const imgLink = jsonResponse.response.photos.items.prefix + "100x100" + jsonResponse.response.photos.items.suffix
-                return imgLink //HERE IS THE PROBLEM
+                return imgLink 
               };
               
               
               
               const category = venue.categories[0].name;
             
-              const venueContent = createVenueHTML(venue.name, venue.location, imgLink, category);
+              const venueContent = createVenueHTML(venue.name, venue.location, response.imgLink, category);
               $venue.append(venueContent);
 
 
