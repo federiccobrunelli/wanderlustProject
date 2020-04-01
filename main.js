@@ -54,7 +54,7 @@ const Foursquare = {
         const response = fetch(photoUrlToFetch);
               if (response.ok){
                 const jsonResponse = response.json();
-                const imgLink = jsonResponse.response.photos.items.prefix + "100x100" + jsonResponse.response.photos.items.suffix
+                const imgLink = `${jsonResponse.response.photos.items.prefix100x100jsonResponse.response.photos.items.suffix}`;
                 return imgLink 
               };
               
