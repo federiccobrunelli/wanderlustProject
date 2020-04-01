@@ -1,5 +1,14 @@
 //https://api.foursquare.com/v2/venues/4bbdea8c8a4fb71387863d9d/photos?/&v=20200329&client_id=CIADO1WQRLMX5FIFY15WAPM4RHIM20JRUYMQ33JBYF3JLQHW&client_secret=FF0OBP41LPYMWZLEDK1OWIACMZXJXC4GNT41T0RV0CU43E50&v=20200331
-// Foursquare API Info
+/*
+const venueImgSrc = await getPic(venue.id)
+getPic has to return a url for the picture
+    
+parsing json
+*/
+
+
+
+
 const Foursquare = {
     clientId: 'CIADO1WQRLMX5FIFY15WAPM4RHIM20JRUYMQ33JBYF3JLQHW',
     clientSecret: 'FF0OBP41LPYMWZLEDK1OWIACMZXJXC4GNT41T0RV0CU43E50',
@@ -115,9 +124,3 @@ const Foursquare = {
 
 
 
-        /*
-    const venueImgSrc = await getPic(venue.id)
-    getPic has to return a url for the picture
-    
-    parsing json
-    */
